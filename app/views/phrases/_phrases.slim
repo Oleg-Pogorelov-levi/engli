@@ -1,0 +1,28 @@
+- @phrases.each do |phrase|
+  tr
+    td
+      = phrase.id
+    td
+      = link_to phrase.phrase, phrase_path( phrase.slug )
+    td
+      = phrase.translation
+    td
+      = phrase.category
+    - if !@user
+      td
+        = link_to phrase.user.username, user_path( phrase.user )
+    td
+      - if phrase.is_author? current_user
+        = link_to 'Edit', edit_phrase_path( phrase.id )
+        | |
+        = link_to 'Delete', phrase_path( phrase.id ), method: :delete, data: { confirm: 'Delete phrase?'}
+      - else
+        p. -
+    td
+      = link_to vote_phrase_path(phrase, vote: 'up'), method: :post do
+        div
+          span.like &#9650;	
+      | #{ phrase.get_likes.size - phrase.get_dislikes.size }
+      = link_to vote_phrase_path(phrase, vote: 'down'), method: :post do
+        div
+          span.like &#9660;	

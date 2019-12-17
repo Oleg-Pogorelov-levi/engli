@@ -1,0 +1,21 @@
+h1
+  | Listing phrases
+table.table
+  tr
+    th
+      | Id
+    th
+      | Phrase
+    th
+      | Translation
+    th
+      | Category
+    th
+      | Author
+    th
+      | Action
+    th
+      | Votes
+  = render "phrases/phrases"
+= link_to 'Add phrase', new_phrase_path
+= will_paginate @phrases

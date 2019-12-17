@@ -1,0 +1,22 @@
+- @examples.each do |example|
+
+    tr
+        td 
+            div.block_example
+                = example.example
+        td = example.user.username
+        td = date_formatter example.created_at
+
+        td
+            = link_to phrase_example_vote_path(example.phrase, example, vote: 'up'), method: :post do
+                div
+                    span.like &#9650;	
+            | #{ example.get_likes.size - example.get_dislikes.size }
+            = link_to phrase_example_vote_path(example.phrase, example, vote: 'down'), method: :post do
+                div
+                    span.like &#9660;	
+
+        - if delete_example?(example)
+           td = link_to 'delete', phrase_example_path(example.phrase, example), class: 'delete_phrase', method: :delete
+        - else
+            -

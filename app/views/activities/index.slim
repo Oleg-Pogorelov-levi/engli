@@ -1,0 +1,29 @@
+h1 #{current_user.username} Notifications
+
+.container-fluid.m-t-l
+  .row
+    .col-md-9.col-md-offset-1
+      - @activities.each do |notification|
+        .notification
+            div.container
+              - if notification.readed == false
+                span.no-read#notifications
+              - else
+              = link_to notification.owner.username, user_path(notification.owner)
+              ' &nbsp;
+              - if notification.like == 1
+                | set like
+                ' &nbsp;
+              - else 
+                | set dislike
+                ' &nbsp;
+              - if notification.trackable.nil?
+                | [phrase deleted]
+                ' &nbsp;
+              - else
+                = link_to notification.trackable.phrase, phrase_path(notification.trackable)
+                span.notification-date
+              = date_formatter notification.created_at
+
+= javascript_pack_tag 'activities'
+              

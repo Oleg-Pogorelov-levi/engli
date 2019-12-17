@@ -1,0 +1,33 @@
+= form_for(@phrase) do |f|
+  - if @phrase.errors.any?
+    #error_explanation.form-group
+      h2
+        = pluralize(@phrase.errors.count, "error")
+        |  prohibited this phrase from being saved:
+      ul.alert.alert-danger
+        - @phrase.errors.full_messages.each do |message|
+          li
+            = message
+  .field
+    = f.label :phrase
+    br
+    = f.text_field(:phrase, { class: 'form-control' })
+  .field
+    = f.label :translation
+    br
+    = f.text_field :translation, { class: 'form-control' }
+  - if @phrase.id.nil?
+    .field
+        = f.fields_for :examples do |example|
+            br
+            = example.label :example
+            br
+            = example.text_field :example, { class: 'form-control' }
+            = example.hidden_field :user_id, value: current_user.id 
+            = example.hidden_field :phrase_id, value: @phrase.id 
+  .field
+    = f.label :category
+    br
+    = f.select :category, ([['Actions'], ['Time'], ['Productivity'], ['Apologies'], ['Common']])
+  .actions
+    = f.submit({ :class => "btn btn-primary" })

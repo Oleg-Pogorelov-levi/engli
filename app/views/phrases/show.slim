@@ -1,0 +1,40 @@
+h1.phrase
+  |Phrase #{@phrase.phrase}
+  br
+  br
+.container
+  .row
+    .col-md-6
+      h4 Phrase: #{@phrase.phrase}
+      h4 Translation: #{@phrase.translation}
+      h4 Category: #{@phrase.category}
+
+    .col-md-6
+      h4 Author: #{@phrase.user.username}
+      h4 Created At: #{date_formatter @phrase.created_at}
+      h4 Updated At: #{date_formatter @phrase.updated_at}
+      br
+      br
+
+
+= form_for @example, url: phrase_examples_path(@phrase) do |f|
+  = f.label :example
+  br
+  = f.text_field :example, { class: 'form-control' }
+  = f.hidden_field :user_id, value: current_user.id 
+  = f.hidden_field :phrase_id, value: @phrase.id
+  .actions
+    = f.submit 'Create example', { class: "btn btn-primary" }
+
+h2.phrase Examples:
+.container
+  table.table
+    tr
+      th Example
+      th Author
+      th Created At
+      th Votes
+
+      = render 'examples/example'
+
+= will_paginate @examples

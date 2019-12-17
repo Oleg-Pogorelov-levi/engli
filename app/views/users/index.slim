@@ -1,0 +1,18 @@
+h1
+  | Users
+table.table
+  tr
+    th
+      | Id
+    th
+      | Username
+    th
+      | Email
+    th
+      | Created At
+    th
+      | Updated At
+    th
+      | Carma
+  = render "users/user"
+= will_paginate @users

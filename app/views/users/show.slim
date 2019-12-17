@@ -1,0 +1,18 @@
+h1
+  | Username: 
+  = @user.username
+table.table
+  tr
+    th
+      | Id
+    th
+      | Phrase
+    th
+      | Translation
+    th
+      | Category
+    th
+      | Action
+  -if @phrases.any?
+    = render "phrases/phrases"
+= will_paginate @phrases
